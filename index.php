@@ -1,37 +1,57 @@
 <!--
-    if statement: if statement is used to execute code based on a condition. 
-                If the condition evaluates to 'true', the code inside the 'if' block runs. 
-                otherwise, it is skipped.
-    Note: The order of if and else-if statements matter, when there are mutiple statements/conditions.
+    Logical Operators: it combines the conditional statements.
+    like if(condition1 && condition2)....
+    
+    && : When both conditions are true, execute block => if(condition1 && condition2)
+    || : if one of the condition is true, execute block => if(condition1 || condition2)
+    ! : it reverse the condtion, true if false, false if true, execute block => if(!condition) 
   -->
 <?php
-//if we do $age ='asd'; (string)
-//PHP code has an issue because $age is assigned the value 'asd' (a string). 
-//When you compare a string with a number in PHP, it can lead to unexpected behavior.
 
-// Potential Issues
-// 1. $age = 'asd'; => The semicolon inside quotes makes $age a string, not a number.
-// 2. if ($age > 80) => Comparing a string with a number can cause unexpected type coercion.
-// 3. The else block never executes because one of the previous conditions will always be true.
+$temp = 10;
 
-$age = 11;
+// &&(AND) logical operator
+echo "<u><span>&&(AND) logical operator example.</span></u> <br>";
 
-if ($age >= 80) {
-    echo "You are too old, please don't apply";
-} elseif ($age > 18) {
-    echo "You can apply for Driving License.";
-} elseif ($age <= 0) {
-    echo "Enter the  age greater than 0";
-} elseif ($age <= 18) {
-    echo "You can not apply for Driving License, your age should be 18+.";
+if ($temp >= 0 && $temp <= 35) {
+    echo "The weather is good. <br>";
 } else {
-    echo "Error!, Enter the correct value";
+    echo "The weather is not good.<br>";
 }
 
-echo "<br>";
+// ||(OR) logical operator
+echo "<br><u><span>||(OR) logical operator example.</span></u> <br>";
 
-//Ternary Operator (Short Form)
-$result = ($age >= 80) ? "You are too old, please don't apply" : (($age > 18) ? "You can apply for Driving License." : (($age <= 0) ? "Enter the  age greater than 0" : (($age <= 18) ?  "You can not apply for Driving License, your age should be 18+." : ("Error!, Enter the correct value"))));
-echo $result;
+if ($temp < 0 || $temp > 35) {
+    echo "The weather is not good.<br>";
+} else {
+    echo "The weather is good.<br>";
+}
+
+// !(NOT) logical operator
+echo "<br><u><span>!(NOT) logical operator example.</span></u> <br>";
+
+$cloudy = true;
+if (!$cloudy) {
+    echo "it's not cloudy.<br>";
+} else {
+    echo "it's cloudy.<br>";
+}
+
+
+echo "<br><u><span>Movie ticket example.</span></u> <br>";
+
+$child = true;
+$senior = false;
+$price = null;
+if ($child || $senior) { //if any of the condition true, this block will execute.
+    $price = 10;
+} else {
+    $price = 15;
+}
+
+echo "The movie ticket price is \${$price}.";
+
+
 
 ?>
