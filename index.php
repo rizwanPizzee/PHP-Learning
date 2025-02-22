@@ -1,57 +1,48 @@
 <!--
-    Logical Operators: it combines the conditional statements.
-    like if(condition1 && condition2)....
-    
-    && : When both conditions are true, execute block => if(condition1 && condition2)
-    || : if one of the condition is true, execute block => if(condition1 || condition2)
-    ! : it reverse the condtion, true if false, false if true, execute block => if(!condition) 
+    Switch statement: It is the replacement to using many elseif statements
+                      it is more effecient, and less code to write.
   -->
 <?php
 
-$temp = 10;
+//Example in if-elseif-else statement
+$grade = 'C';
 
-// &&(AND) logical operator
-echo "<u><span>&&(AND) logical operator example.</span></u> <br>";
-
-if ($temp >= 0 && $temp <= 35) {
-    echo "The weather is good. <br>";
+echo "<b>if-elseif-else statement example</b><br>";
+if ($grade == "A") {
+    echo "Excellent";
+} elseif ($grade == "B") {
+    echo "Best";
+} elseif ($grade == "C") {
+    echo "Good";
+} elseif ($grade == "D") {
+    echo "Not Bad";
+} elseif ($grade == "F") {
+    echo "Fail";
 } else {
-    echo "The weather is not good.<br>";
-}
-
-// ||(OR) logical operator
-echo "<br><u><span>||(OR) logical operator example.</span></u> <br>";
-
-if ($temp < 0 || $temp > 35) {
-    echo "The weather is not good.<br>";
-} else {
-    echo "The weather is good.<br>";
-}
-
-// !(NOT) logical operator
-echo "<br><u><span>!(NOT) logical operator example.</span></u> <br>";
-
-$cloudy = true;
-if (!$cloudy) {
-    echo "it's not cloudy.<br>";
-} else {
-    echo "it's cloudy.<br>";
+    echo "Please! Enter the correct grade.";
 }
 
 
-echo "<br><u><span>Movie ticket example.</span></u> <br>";
+//Example in Switch statement
+echo "<br><br><b>Switch statement example</b><br>";
 
-$child = true;
-$senior = false;
-$price = null;
-if ($child || $senior) { //if any of the condition true, this block will execute.
-    $price = 10;
-} else {
-    $price = 15;
+switch ($grade) {
+    case "A":
+        echo "Excellent";
+        break;  //without the 'break;', in some coditions all of the code before it returns by that piece of code
+    case "B":
+        echo "Best";
+        break;
+    case "C":
+        echo "Good";
+        break;
+    case "D":
+        echo "Not Bad";
+        break;
+    case "F":
+        echo "Fail";
+        break;
+    default: //it is kind of 'else' statement. 
+        echo "Please! Enter the correct grade.";
 }
-
-echo "The movie ticket price is \${$price}.";
-
-
-
 ?>
