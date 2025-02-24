@@ -1,39 +1,100 @@
 <!--
-    Array = a "variable" which can hold more than one type of values, or multiple values of same type.
+    Associative Array = it is similar to array but it is an array made of key=>value pairs.
 
-    array(); function is used for array data type variable
+    An associative array in PHP is an array that uses named keys (strings) instead of numeric indexes. 
+    Each key in the array is associated with a specific value
 
-    $arrayName = array(value1, value2, ... , valueN);
+    Associative Array CANNOT store functions directly
+
+    Associative array declaration
+    $array_name = array($key=> $value);
+
+    Accessing by index
+    echo $array_name[$key];
+
+    Looping through data
+    foreach ($array_name as $key => $value) {
+        echo "$key: $value <br>";
+    }
   -->
 <?php
-$cars = array("Land Crusier", "Fortuner", "E-Tron", "Sonata", "Range Rover");
 
-//echo $cars; // it will give an error(Warning: Array to string conversion), because we can not directly display or use or access array.
+$capitals = array(
+    "USA" => "Washington D.C",
+    "Pakistan" => "Islamabad",
+    "India" => "New Delhi",
+    "Afghanistan" => "Kabul"
+);
 
-//solution 1: we can call by index
-echo $cars[2] . "<br>"; // "E-Tron";
-echo $cars[0] . "<br>"; //"Land Crusier"
+//Accessing by index
+echo $capitals["USA"] . '<br>'; //"Washington D.C"
+echo $capitals["Pakistan"] . '<br>'; //"Islamabad"
+echo $capitals["India"] . '<br>'; //"New Delhi"
+echo $capitals["Afghanistan"] . '<br>'; //"Kabul"
 
-//solution 2: Use foreach() loop to display each value
-echo "<br><b>foreach loop <br></b>";
-foreach ($cars as $car) { //it will display each value of array.
-    echo $car . "<br>";
+echo "<br>";
+
+
+//Result
+// USA capital is Washington D.C
+// Pakistan capital is Washington D.C
+// India capital is New Delhi
+// Afghanistan capital is Kabul
+
+echo "<br><b>Some Other Functions</b><br>";
+//Some other functions
+echo "Count: " . count($capitals) . "<br>"; // Count: 4
+$capitals["USA"] = "Las Vegas"; //by this we can change the value of specific key now array is  ["USA" => "Las Vegas", "Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul"].
+$capitals["China"] = "Beijing"; //it will add new Key and value at the end of an array, ["USA" => "Las Vegas", "Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul", "China" => "Beijing"].
+array_pop($capitals); // remove key and value from last of array, ["USA" => "Las Vegas", "Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul"].
+array_shift($capitals); // remove key and value from start of array, ["Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul"].
+$keys = array_keys($capitals); //it returns an array of 'keys' only, thats why it is stored into a variable, keys are: ["Pakistan", "India", "Afghanistan"].
+$values = array_values($capitals); //it returns an array of 'values' only, thats why it is stored into a variable, values are: ["Islamabad", "New Delhi", "Kabul"].
+$capitals = array_flip($capitals); //it returns an array but it exchange the keys with values or vice versa the new $capitals becomes: ["Islamabad"=> "Pakistan" ,  "New Delhi" => "India", "Kabul" => "Afghanistan"].
+$capitals = array_reverse($capitals); //it returns a reverse array the new $capitals becomes: [ "Kabul" => "Afghanistan",  "New Delhi" => "India", "Islamabad"=> "Pakistan"]. 
+
+//Looping through data
+foreach ($capitals as $key => $value) {
+    echo "{$key} capital is {$value} <br>";
 }
 
-//some other functions of array
-echo "<br><b>some other functions of array <br></b>";
+// Result
+// Kabul capital is Afghanistan
+// New Delhi capital is India
+// Islamabad capital is Pakistan
 
-echo count($cars) . "<br>"; //count() , counts the length of array. like 5.
-
-//we can add some value at specific index or can change the value of a specific index value.
-$cars[0] = "F1"; // new car array be like ["F1", "Fortuner", "E-Tron", "Sonata", "Range Rover"].
-array_push($cars, "Cybertruck"); //array_push() adds the value at the end of array like // new car array be like ["F1", "Fortuner", "E-Tron", "Sonata", "Range Rover", "Cybertruck"].
-array_pop($cars); //array_pop() removes the last value of an array like // new car array be like ["F1", "Fortuner", "E-Tron", "Sonata", "Range Rover"].
-array_shift($cars); //array_shift() removes the first value of an array like // new car array be like ["Fortuner", "E-Tron", "Sonata", "Range Rover"].
-$cars = array_reverse($cars); //array_reverse(), it returns a revers array, so thats why we store it into another variable.
-
-
-foreach ($cars as $car) { //it will display each value of array.
-    echo $car . "<br>";
-}
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assosiative Array</title>
+</head>
+
+<body>
+    <form action="index.php" method="POST">
+        <br>
+        <label for="country">Country</label>
+        <input type="text" id="country" name="country" placeholder="Enter Country Name...">
+        <input type="submit" value="Submit">
+    </form>
+    <?php
+    $capitals = array(
+        "USA" => "Washington D.C",
+        "Pakistan" => "Islamabad",
+        "India" => "New Delhi",
+        "Afghanistan" => "Kabul"
+    );
+
+    $capital = $capitals[$_POST["country"]];
+    if ($capital)
+        echo "The Capital of {$_POST["country"]} is {$capital}.";
+    else
+        echo "Enter Correct Name of Country.";
+    ?>
+</body>
+
+</html>
