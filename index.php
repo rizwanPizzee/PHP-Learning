@@ -1,67 +1,23 @@
 <!--
-    Associative Array = it is similar to array but it is an array made of key=>value pairs.
+    isset(): This function returns TRUE, if a variable is declared and not null.
+    in simple words isset() returns true, if a variable is set(mean variable has some value) or not null, otherwise returns true.
 
-    An associative array in PHP is an array that uses named keys (strings) instead of numeric indexes. 
-    Each key in the array is associated with a specific value
+    empty(): This function returns TRUE, if a variable is not declared or false or null or "" (empty string).
+    in simple words empty() returns true, if a variable is empty or not declared, otherwise returns true.
 
-    Associative Array CANNOT store functions directly
+    both functions are use for testing (some cases).
 
-    Associative array declaration
-    $array_name = array($key=> $value);
-
-    Accessing by index
-    echo $array_name[$key];
-
-    Looping through data
-    foreach ($array_name as $key => $value) {
-        echo "$key: $value <br>";
-    }
+    in PHP if we 'echo' some thing and it displays '1' it means true and if it displays nothing it means false.
   -->
 <?php
 
-$capitals = array(
-    "USA" => "Washington D.C",
-    "Pakistan" => "Islamabad",
-    "India" => "New Delhi",
-    "Afghanistan" => "Kabul"
-);
+$name = "Pizzee";
 
-//Accessing by index
-echo $capitals["USA"] . '<br>'; //"Washington D.C"
-echo $capitals["Pakistan"] . '<br>'; //"Islamabad"
-echo $capitals["India"] . '<br>'; //"New Delhi"
-echo $capitals["Afghanistan"] . '<br>'; //"Kabul"
+echo isset($name) . "<br>"; // 1 (true) (which means $name is declared and has some value, not null)
+echo isset($no_name); // it will display nothing (means false) because $no_name is  not declared.
 
-echo "<br>";
-
-
-//Result
-// USA capital is Washington D.C
-// Pakistan capital is Washington D.C
-// India capital is New Delhi
-// Afghanistan capital is Kabul
-
-echo "<br><b>Some Other Functions</b><br>";
-//Some other functions
-echo "Count: " . count($capitals) . "<br>"; // Count: 4
-$capitals["USA"] = "Las Vegas"; //by this we can change the value of specific key now array is  ["USA" => "Las Vegas", "Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul"].
-$capitals["China"] = "Beijing"; //it will add new Key and value at the end of an array, ["USA" => "Las Vegas", "Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul", "China" => "Beijing"].
-array_pop($capitals); // remove key and value from last of array, ["USA" => "Las Vegas", "Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul"].
-array_shift($capitals); // remove key and value from start of array, ["Pakistan" => "Islamabad", "India" => "New Delhi","Afghanistan" => "Kabul"].
-$keys = array_keys($capitals); //it returns an array of 'keys' only, thats why it is stored into a variable, keys are: ["Pakistan", "India", "Afghanistan"].
-$values = array_values($capitals); //it returns an array of 'values' only, thats why it is stored into a variable, values are: ["Islamabad", "New Delhi", "Kabul"].
-$capitals = array_flip($capitals); //it returns an array but it exchange the keys with values or vice versa the new $capitals becomes: ["Islamabad"=> "Pakistan" ,  "New Delhi" => "India", "Kabul" => "Afghanistan"].
-$capitals = array_reverse($capitals); //it returns a reverse array the new $capitals becomes: [ "Kabul" => "Afghanistan",  "New Delhi" => "India", "Islamabad"=> "Pakistan"]. 
-
-//Looping through data
-foreach ($capitals as $key => $value) {
-    echo "{$key} capital is {$value} <br>";
-}
-
-// Result
-// Kabul capital is Afghanistan
-// New Delhi capital is India
-// Islamabad capital is Pakistan
+echo empty($name);  // it will display nothing (means false) because $name is declared and not empty.
+echo empty($no_name) . "<br>"; // 1 (true) (which means $no_name is not declared or null or empty).
 
 ?>
 
@@ -71,29 +27,48 @@ foreach ($capitals as $key => $value) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assosiative Array</title>
+    <title>isset() & empty()</title>
 </head>
 
 <body>
+    <br>
     <form action="index.php" method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username"><br>
+        <label for="password">Password</label>
+        <input type="password" name="password"><br>
+        <input type="submit" value="Log-In" name="login">
         <br>
-        <label for="country">Country</label>
-        <input type="text" id="country" name="country" placeholder="Enter Country Name...">
-        <input type="submit" value="Submit">
-    </form>
-    <?php
-    $capitals = array(
-        "USA" => "Washington D.C",
-        "Pakistan" => "Islamabad",
-        "India" => "New Delhi",
-        "Afghanistan" => "Kabul"
-    );
 
-    $capital = $capitals[$_POST["country"]];
-    if ($capital)
-        echo "The Capital of {$_POST["country"]} is {$capital}.";
-    else
-        echo "Enter Correct Name of Country.";
+        <!-- initially only login button has the value, and not other two input have any value -->
+    </form>
+
+    <?php
+    //echo isset($_POST['login']); //when click on login button it will check if login button is set or not.
+
+    if (isset($_POST['login'])) { //if it returns 1(true), then the code below will execute.
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        if (empty($username)) { //if it returns false (displays nothing)), then the code below will execute.
+            echo "Please! Enter the username";
+        } elseif (empty($password)) {
+            echo "Please! Enter the password";
+        } else {
+            echo "Welcome {$username}! <br>";
+        }
+    }
+
+    //all data retrival from form
+    foreach ($_POST as $key => $value) {
+        echo "{$key} = {$value} <br>";
+    }
+
+    //display/Full result
+    // Welcome Pizzee!
+    // username = Pizzee
+    // password = pze123
+    // login = Log-In
     ?>
 </body>
 
