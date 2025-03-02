@@ -10,23 +10,27 @@
 <body>
     <br>
     <form action="index.php" method="POST">
-        <input type="radio" name="credit_card" value="Visa">Visa <br>
-        <input type="radio" name="credit_card" value="Mastercard">Mastercard <br>
-        <input type="radio" name="credit_card" value="American Express">American Express <br>
+        <input type="checkbox" name="mercedes" value="mercedes">Mercedes <br>
+        <input type="checkbox" name="rolls_royce" value="rolls_royce">Rolls Royce<br>
+        <input type="checkbox" name="toyota" value="toyota">Toyota<br>
+        <input type="checkbox" name="kia" value="kia">KIA<br>
         <input type="submit" value="confirm" name="confirm">
-    </form>
+    </form><br>
 
     <?php
 
-    $credit_card = null;
-
     if (isset($_POST['confirm'])) {
-
-        if (isset($_POST['credit_card'])) { //it checks if any credit card is selected or not
-            $credit_card = $_POST['credit_card'];
-            echo "You have selected the " . $credit_card . " Credit Card.";
-        } else {
-            echo "Please! make a selection.";
+        if (isset($_POST['mercedes'])) {
+            echo "You like Mercedes! <br>";
+        }
+        if (isset($_POST['rolls_royce'])) {
+            echo "You like Rolls Royce! <br>";
+        }
+        if (isset($_POST['toyota'])) {
+            echo "You like Toyota! <br>";
+        }
+        if (isset($_POST['kia'])) {
+            echo "You like KIA! <br>";
         }
     }
     ?>
