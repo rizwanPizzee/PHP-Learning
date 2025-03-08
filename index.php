@@ -1,62 +1,59 @@
 <!-- 
- Session: $_SESSION superglobal variable used to store data of a user, to be used accross multiple pages.
-        A user is assigned a session-id, a session is started.
+    $_SERVER: $_SERVER variable in PHP is a superglobal associative array that contains information 
+            about headers, paths and script locations provided by the web server. 
+            The entries in this array are created by web server.
+            it Shows everything about the current web page environment.
 
-        This allows us to preserve data such as user authentication status, 
-        shopping cart contents, or preferences as the user navigates through different pages.
+    we can display everything about current webpage by
 
-        Syntax:
-        session is started with: session_start(); //should be enclosed in php tags before any code.
+    foreach($_SERVER as $key => $value){
+        echo $key . ": " . $value;
+    }
 
-        session is destroyed with: session_destroy(); //should be enclosed in php tags.
+    but must of things are not for beginners, so we use the
 
-        $_SESSION SuperGlobalVariable is used for storing the session values like Id, Username, Password ect.
-        $_SESSION: is an associative array.
+    $_SERVER['REQUEST_METHOD']: The HTTP method (GET, POST, etc.) used to access the page.
+    $_SERVER['PHP_SELF']: The filename of the currently executing script.
 
-        header("Location: file_path.extention"); //header() funtion is used for jumping into another file.
-        
-        
-        Example Below: Login(through index.php) and Logout(through home.php).
-                        from index.php we will login and gathers the username and password, and displays on home.php from there we will logout.
-        
-        Note: from where(file) we are gathering the info, there must be session_start(); function and 
-                where we are sending(file) also there should be the session_start(); fumction.
+    tip: it is good practice to wrap the $_SERVER['PHP_SELF'] in htmlspecialchars() function,
+        because htmlspecialchars() function restrict the XSS(Cross Site Scripting).
 -->
 
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Login</title>
 </head>
 
 <body>
-    <h1>Login Page</h1>
-    <form action="index.php" method="post">
+
+    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post"> <!-- instead of writing the current file name we do some php scripting for current file, so if anytime we change the file name, we should not think about to chnage the name of file here-->
         <label>Username: </label>
-        <input type="text" name="username"> <br>
-        <label>Password: </label>
-        <input type="password" name="password"><br>
+        <input type="text" name="username"><br>
         <input type="submit" value="Login" name="login">
     </form>
 
     <?php
+    /*
     if (isset($_POST['login'])) {
-        if (!empty($_POST['username']) && !empty($_POST['password'])) {
-            $_SESSION['username'] = $_POST['username'];
-            $_SESSION['password'] = $_POST['password'];
-            header('Location: home.php');
-        } else {
-            echo "<br>Enter both the Username and Password.<br>";
-        }
+        echo "Home Page!";
     }
+    */
 
+    if ($_SERVER['REQUEST_METHOD'] == "POST") { //it is more reliable than the above isset() option for login pages, beacause the page will not login until the method of the current page is 'POST', the deafault is 'GET'
+        echo "Home Page!";
+    }
     ?>
+
 </body>
 
 </html>
+
+
+<?php
+//echo $_SERVER['PHP_SELF]; //index.php
+//echo $_SERVER['REQUEST_METHOD']; //GET (GET is default request method)
+?>
