@@ -1,40 +1,33 @@
 <!--
-Table creation:
-1. go to Databases(Top Bar), Select the databse
-2. Write the name of table and no. of columns. 
-3. Now insert the columns name, types, Default Values(like date is CURRENT_TIMESTAMP), key.
-4. if we have an id we can auto increment that by enabling the A_I checkbox.
-5. Click the Save Button (Now your empty table is ready).
+Retrieving(SELECT) Data from database:
 
-syntax for values insertion:
-    INSERT INTO tabel_name (column1, column2, ...) VALUES ('value1', 'value2', ...)
+syntax:
+    SELECT * FROM table_name; //it retrives all data from table
+    SELECT * FROM table_name WHERE coulumn_name = 'data_you_want'; //it retrives the specific data
 
-    mysqli_query($connection, $sql);//this function is use for inserting te data to tables in database, 
-                                    first argument is for connection for database, 2nd argument is the query, that we are sending.
 
-we can insert data into table by using the below steps.
 -->
 <?php
 include("database.php");
 
-/*
-this is without hashing 
- $sql = "INSERT INTO users (user, password) 
-             VALUES ('Pizee', 'piz13')";
-*/
+//$sql = "SELECT * FROM users WHERE user = 'Pizzee'"; //for specific data retrieval
 
-$username = "Rizwan Pizzee";
-$password = "rizwan pizzee123";
-$hash = password_hash($password, PASSWORD_DEFAULT);
-
-$sql = "INSERT INTO users (user, password)
-            VALUES('$username', '$hash')";
-
+$sql = "SELECT * FROM users"; //for full table data retrieval.
 try {
-    mysqli_query($connection, $sql);
-    echo "User is now registered";
+    $result = mysqli_query($connection, $sql); //it will return an associative arry , because we are reteriving data, thats why we stored into a variable.
+    if (mysqli_num_rows($result) > 0) {  //mysqli_num_rows(); i check rows, in data which we are retrieving
+
+        while ($rows = mysqli_fetch_assoc($result)) { //mysqli_fetch_assoc(), it fetches the next row from the result, as associative array. 
+            echo $rows['id'] . "<br>";
+            echo $rows['user'] . "<br>";
+            echo $rows['password'] . "<br>";
+            echo $rows['date'] . "<br>";
+        }
+    } else {
+        echo "There is no data";
+    }
 } catch (mysqli_sql_exception) {
-    echo "Error! while entering the data";
+    echo "Error! while retriving data";
 }
 
 mysqli_close($connection);
