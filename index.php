@@ -1,26 +1,41 @@
 <!--
-    hashing: it tranforming the sensitive data(like passwords), into letters, numbers 
-            and/or symbols, via a mathmetical process(wich is similar to encryption).
-            it hides the original data from 3rd parties.
+Table creation:
+1. go to Databases(Top Bar), Select the databse
+2. Write the name of table and no. of columns. 
+3. Now insert the columns name, types, Default Values(like date is CURRENT_TIMESTAMP), key.
+4. if we have an id we can auto increment that by enabling the A_I checkbox.
+5. Click the Save Button (Now your empty table is ready).
 
-    Syntax:
+syntax for values insertion:
+    INSERT INTO tabel_name (column1, column2, ...) VALUES ('value1', 'value2', ...)
 
-    password_hash($variable_want_to_hash, PASSWORD_DEFAULT); //PASSWORD_DEFAULT: is the deafult PHP, uses bcrypt algorithm for hashing.
+    mysqli_query($connection, $sql);//this function is use for inserting te data to tables in database, 
+                                    first argument is for connection for database, 2nd argument is the query, that we are sending.
 
-    password_hash(); returns a string, it is better to be stored in a variable.
-
-    password_verify($actual_passwod, $hash_password);//it returns boolean, it checks if the $actual_password(entered password) is equall to the $hash_password(that we encrypt using hash function). 
+we can insert data into table by using the below steps.
 -->
-
-
 <?php
-$password = "pizzee123";
+include("database.php");
 
+/*
+this is without hashing 
+ $sql = "INSERT INTO users (user, password) 
+             VALUES ('Pizee', 'piz13')";
+*/
+
+$username = "Rizwan Pizzee";
+$password = "rizwan pizzee123";
 $hash = password_hash($password, PASSWORD_DEFAULT);
 
-if (password_verify($password, $hash)) {
-    echo "Correct Password!";
-} else {
-    echo "Incorrect Password!";
+$sql = "INSERT INTO users (user, password)
+            VALUES('$username', '$hash')";
+
+try {
+    mysqli_query($connection, $sql);
+    echo "User is now registered";
+} catch (mysqli_sql_exception) {
+    echo "Error! while entering the data";
 }
+
+mysqli_close($connection);
 ?>
